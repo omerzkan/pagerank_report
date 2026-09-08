@@ -318,7 +318,6 @@ INPUT .\sec\hw1_implementation.tex
 INPUT .\sec\hw1_implementation.tex
 INPUT .\sec\hw1_implementation.tex
 INPUT sec\hw1_implementation.tex
-INPUT C:\Users\omero\AppData\Local\Programs\MiKTeX\fonts\vf\adobe\times\ptmr8t.vf
 INPUT .\tables\paper_checks.tex
 INPUT .\tables\paper_checks.tex
 INPUT .\tables\paper_checks.tex
@@ -382,6 +381,11 @@ INPUT .\tables\ex17_fig21.tex
 INPUT tables\ex17_fig21.tex
 INPUT C:\Users\omero\AppData\Local\Programs\MiKTeX\fonts\tfm\adobe\times\ptmr8t.tfm
 INPUT C:\Users\omero\AppData\Local\Programs\MiKTeX\fonts\tfm\jknappen\ec\ectt0800.tfm
+INPUT .\tables\ex17_hollins.tex
+INPUT .\tables\ex17_hollins.tex
+INPUT .\tables\ex17_hollins.tex
+INPUT .\tables\ex17_hollins.tex
+INPUT tables\ex17_hollins.tex
 INPUT C:\Users\omero\AppData\Local\Programs\MiKTeX\fonts\vf\adobe\times\zptmcm7m.vf
 INPUT C:\Users\omero\AppData\Local\Programs\MiKTeX\fonts\tfm\adobe\times\psyro.tfm
 INPUT C:\Users\omero\AppData\Local\Programs\MiKTeX\fonts\tfm\public\cm\cmmi10.tfm
@@ -395,11 +399,6 @@ INPUT C:\Users\omero\AppData\Local\Programs\MiKTeX\fonts\tfm\adobe\times\ptmr8r.
 INPUT C:\Users\omero\AppData\Local\MiKTeX\fonts\tfm\public\rsfs\rsfs10.tfm
 INPUT C:\Users\omero\AppData\Local\Programs\MiKTeX\fonts\vf\adobe\times\zptmcm7t.vf
 INPUT C:\Users\omero\AppData\Local\Programs\MiKTeX\fonts\tfm\public\cm\cmr10.tfm
-INPUT .\tables\ex17_hollins.tex
-INPUT .\tables\ex17_hollins.tex
-INPUT .\tables\ex17_hollins.tex
-INPUT .\tables\ex17_hollins.tex
-INPUT tables\ex17_hollins.tex
 INPUT .\sec\hw3_intro.tex
 INPUT .\sec\hw3_intro.tex
 INPUT .\sec\hw3_intro.tex

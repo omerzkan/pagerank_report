@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.29 (MiKTeX 26.5) (preloaded format=pdflatex 2026.6.8)  8 SEP 2026 04:45
+This is pdfTeX, Version 3.141592653-2.6-1.40.29 (MiKTeX 26.5) (preloaded format=pdflatex 2026.6.8)  8 SEP 2026 19:42
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -521,10 +521,15 @@ File: ts1ptm.fd 2001/06/04 font definitions for TS1/ptm.
 
 ] (tables/paper_checks.tex)
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <10> not available
-(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 91.
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 90.
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <7.4> not available
-(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 91.
- (tables/hollins_summary.tex) [7] (tables/hollins_top10.tex)) (sec/ex11.tex [8]
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 90.
+ (tables/hollins_summary.tex [7]) (tables/hollins_top10.tex
+Overfull \hbox (25.70985pt too wide) in paragraph at lines 3--19
+ [][] 
+ []
+
+)) (sec/ex11.tex [8]
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <14.4> not available
 (Font)              Font shape `OT1/ptm/b/n' tried instead on input line 1.
 
@@ -547,9 +552,13 @@ Package hyperref Warning: Token not allowed in a PDF string (Unicode):
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
 (hyperref)                removing `math shift' on input line 1.
 
-(tables/ex17_fig21.tex) [11
+(tables/ex17_fig21.tex) (tables/ex17_hollins.tex
 
-] (tables/ex17_hollins.tex)) [12] (sec/hw3_intro.tex) (sec/ex01.tex [13
+LaTeX Warning: `h' float specifier changed to `ht'.
+
+) [11
+
+]) [12] (sec/hw3_intro.tex) (sec/ex01.tex [13
 
 ] [14
 
@@ -619,20 +628,20 @@ LaTeX2e <2025-11-01>
 L3 programming layer <2026-04-28>
  ***********
 Package rerunfilecheck Info: File `main.out' has not changed.
-(rerunfilecheck)             Checksum: F12ADBBF574845F774FBA79A218A824C;6447.
+(rerunfilecheck)             Checksum: 99A4D523171D686E6CEB2374826F194E;6323.
  ) 
 Here is how much of TeX's memory you used:
- 15223 strings out of 467683
- 244798 string characters out of 5414722
- 686229 words of memory out of 5000000
- 43442 multiletter control sequences out of 15000+600000
- 733358 words of font info for 435 fonts, out of 8000000 for 9000
+ 15204 strings out of 467683
+ 244623 string characters out of 5414722
+ 686174 words of memory out of 5000000
+ 43440 multiletter control sequences out of 15000+600000
+ 733085 words of font info for 431 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 75i,12n,79p,1089b,628s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 75i,12n,79p,1089b,582s stack positions out of 10000i,1000n,20000p,200000b,200000s
  <C:\Users\omero\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ectt1000.pk> <C:\Users\omero\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ectt0800.pk> <C:\Users\omero\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ectt1095.pk><C:/Users/omero/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmex10.pfb><C:/Users/omero/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi10.pfb><C:/Users/omero/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr10.pfb><C:/Users/omero/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy10.pfb><C:/Users/omero/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/symbols/msbm10.pfb><C:/Users/omero/AppData/Local/Programs/MiKTeX/fonts/type1/urw/symbol/usyr.pfb><C:/Users/omero/AppData/Local/Programs/MiKTeX/fonts/type1/urw/symbol/usyr.pfb><C:/Users/omero/AppData/Local/Programs/MiKTeX/fonts/type1/urw/times/utmb8a.pfb><C:/Users/omero/AppData/Local/Programs/MiKTeX/fonts/type1/urw/times/utmr8a.pfb><C:/Users/omero/AppData/Local/Programs/MiKTeX/fonts/type1/urw/times/utmri8a.pfb>
-Output written on main.pdf (25 pages, 240897 bytes).
+Output written on main.pdf (25 pages, 235039 bytes).
 PDF statistics:
- 537 PDF objects out of 1000 (max. 8388607)
- 151 named destinations out of 1000 (max. 500000)
- 110281 words of extra memory for PDF output out of 128383 (max. 10000000)
+ 523 PDF objects out of 1000 (max. 8388607)
+ 141 named destinations out of 1000 (max. 500000)
+ 108225 words of extra memory for PDF output out of 128383 (max. 10000000)
 

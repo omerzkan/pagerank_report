@@ -55,24 +55,6 @@ The sequence $\vx_k$ converges to the score vector $\mathbf{q}$ (Theorem~4.2 of 
 We stop when two consecutive vectors are close in the 1-norm, $\|\vx_{k+1}-\vx_k\|_1 < \texttt{tol}$.
 Each step costs one product $\A\vx$, which is cheap because $\A$ is sparse: on Hollins only $0.066\%$ of the entries of $\A$ are non-zero.
 
-\subsection{Why it works}
-
-The proofs are in Section~3.2 and Section~4 of the paper. We summarise the chain of ideas.
-
-\begin{enumerate}
-  \item \textbf{$\M$ is column-stochastic} (Exercise~7). So $1$ is an eigenvalue of $\M$ and $\Vone{\M}$ is not empty.
-  \item \textbf{$\M$ is positive.} Every entry of $\Smat$ is $1/n > 0$, so for $m > 0$ every entry $M_{ij} \geq m/n > 0$.
-  \item \textbf{A positive column-stochastic matrix has a one-dimensional $V_1$} (Lemma~3.2).
-  Any eigenvector in $\Vone{\M}$ has all positive or all negative entries (Proposition~2), and two independent vectors could be combined into a vector with mixed signs (Proposition~3), which is impossible.
-  So there is exactly one score vector $\mathbf{q}$ with positive entries and $\sum_i q_i = 1$.
-  \item \textbf{The power method converges to $\mathbf{q}$} (Proposition~5).
-  Write $\vx_0 = \mathbf{q} + \mathbf{v}$ with $\sum_j v_j = 0$.
-  Then $\M^k\vx_0 = \mathbf{q} + \M^k\mathbf{v}$, and Proposition~4 gives $\|\M^k\mathbf{v}\|_1 \le c^k\|\mathbf{v}\|_1$ with $c < 1$.
-  So the error goes to zero.
-  \item \textbf{Speed.} The error decreases roughly like $|\lambda_2|^k$, where $\lambda_2$ is the second largest eigenvalue of $\M$, and the paper states that $|\lambda_2| \le 1-m$.
-  So a larger $m$ gives faster convergence. We check this in Exercise~17.
-\end{enumerate}
-
 \subsection{When it does not work}
 \label{sec:when}
 
@@ -87,9 +69,8 @@ The matrix $\M$ solves this because it is positive, so $\dim\Vone{\M} = 1$ for e
 A \emph{dangling node} is a page with no outgoing links.
 Its column in $\A$ is all zeros, so $\A$ is only \emph{sub}-stochastic and $1$ may not be an eigenvalue at all.
 The paper does not treat this case, but the Hollins dataset has 3189 dangling pages (53\% of all pages), so our code must handle it.
-We use the standard fix: a dangling page gives its vote equally to all $n$ pages.
-In the code this means adding the number $\frac{1}{n}\sum_{j \text{ dangling}} x_j$ to every entry of $\A\vx$.
-After this fix the matrix is column-stochastic again and the theory above applies.
+Following the paper, we do not change $\A$: the dangling columns stay zero, and $\M$ is substochastic.
+Its largest eigenvalue is then smaller than $1$, so the solver scales $\vx_k$ to sum $1$ after every step (Section~\ref{sec:implementation}); the dangling test of Exercise~4 in the paper is this situation.
 
 \subsubsection*{The value $m = 0$: the power method may not converge}
 

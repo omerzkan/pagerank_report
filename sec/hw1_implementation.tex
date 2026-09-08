@@ -58,14 +58,13 @@ We tested that this product equals the dense product \texttt{A @ v} on a random 
 \subsection{The solver}
 
 The only solver of the project is the function \texttt{pagerank(links, n, m, tol)}.
-It starts from $\vx_0 = (1/n,\dots,1/n)^T$ and repeats three steps until $\|\vx_{k+1}-\vx_k\|_1 < \texttt{tol}$:
+It starts from $\vx_0 = (1/n,\dots,1/n)^T$ and repeats two steps until $\|\vx_{k+1}-\vx_k\|_1 < \texttt{tol}$:
 \begin{enumerate}[label=\textbf{Step \Alph*.},leftmargin=*]
   \item $\mathbf{y} = \A\vx_k$ with the CSR product.
-  \item $\mathbf{y} \leftarrow \mathbf{y} + \frac{1}{n}\sum_{j\ \text{dangling}} (\vx_k)_j$: the mass of the dangling pages is given back, equally to all pages.
   \item $\vx_{k+1} = (1-m)\mathbf{y} + m\vs$: this is formula (3.2).
 \end{enumerate}
-After Step~C the sum of $\vx_{k+1}$ is already $1$ in exact arithmetic; we divide by the sum once more only to remove rounding errors.
-The function returns the vector $\vx$, the number of iterations $k$ and the last residual $\|\vx_{k+1}-\vx_k\|_1 = \|\M\vx_k - \vx_k\|_1$.
+After Step~B we divide $\vx_{k+1}$ by its sum. When there are no dangling nodes the sum is already $1$ in exact arithmetic and this only removes rounding errors; when there are dangling nodes the sum is smaller than $1$ and the division keeps the vector scaled to sum $1$.
+The function returns the vector $\vx$, the number of iterations $k$ and the last residual $\|\vx_{k+1}-\vx_k\|_1$.
 If the residual is not below \texttt{tol}, the method did not converge.
 
 With $m = 0$ the same function iterates $\vx_{k+1} = \A\vx_k$, so we also use it to rank a web with formula (2.1) (Exercises~1 and~12).
@@ -92,7 +91,7 @@ The ranking for Figure~2.1 with $\M$ is
 and for Figure~2.2 it is exactly $[0.2,\ 0.2,\ 0.285,\ 0.285,\ 0.03]$, as in Example~2 of the paper.
 The order of Figure~2.1 is $1 > 3 > 4 > 2$, the same order as with $\A$.
 
-We also tested the dangling-node fix on a small web (Figure~2.1 without the link $3 \to 1$, so page~3 is dangling): the solver and a dense eigenvector computation on the corrected matrix give the same vector (difference $4\cdot10^{-14}$).
+We also tested the solver on a small web with a dangling node (Figure~2.1 without the link $3 \to 1$, so page~3 is dangling): the solver and a dense eigenvector computation of $\M$ give the same vector (difference $1.3\cdot10^{-13}$).
 
 \subsection{Results on the Hollins dataset}
 \label{sec:hollins}
@@ -101,10 +100,10 @@ Table~\ref{tab:hollins} summarises the run of \texttt{hollins\_main.py} with $m 
 
 \input{tables/hollins_summary}
 
-The most important page is the home page of the university, with a score about 120 times larger than the uniform score $1/n = 0.000166$.
+The most important page is the home page of the university, with a score about 100 times larger than the uniform score $1/n = 0.000166$.
 Table~\ref{tab:hollins-top} lists the ten best pages.
 The pages of the admissions area are high because many pages of the site link to them.
 
 \input{tables/hollins_top10}
 
-Every score is at least $m/n = 2.5\cdot10^{-5}$, as formula (3.2) predicts (the smallest score is $5.8\cdot10^{-5}$).
+Every score is at least $m/n = 2.5\cdot10^{-5}$, as formula (3.2) predicts (the smallest score is $2.8\cdot10^{-5}$).
