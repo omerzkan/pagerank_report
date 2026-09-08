@@ -1,5 +1,5 @@
 # Fdb version 4
-["pdflatex"] 1788889346.27873 "c:/Users/omero/Desktop/STUDY_MATERIALS/2-Computational/Projects/Pagerank/Report_HW1_HW3/main.tex" "main.pdf" "main" 1788889347.77438 0
+["pdflatex"] 1788890060.15535 "c:/Users/omero/Desktop/STUDY_MATERIALS/2-Computational/Projects/Pagerank/Report_HW1_HW3/main.tex" "main.pdf" "main" 1788890061.57612 0
   "C:/Users/omero/AppData/Local/MiKTeX/fonts/map/pdftex/pdftex.map" 1788834552 82507 a9eef8696c92627b87e9975edea03b2a ""
   "C:/Users/omero/AppData/Local/MiKTeX/fonts/pk/ljfour/jknappen/ec/dpi600/ectt0800.pk" 1788834565 15192 69e095ec13195d8e99131c89fe7adf25 ""
   "C:/Users/omero/AppData/Local/MiKTeX/fonts/pk/ljfour/jknappen/ec/dpi600/ectt1000.pk" 1788834563 20028 614c1664f2cab3589d5d65c62dbf963c ""
@@ -118,17 +118,17 @@
   "C:/Users/omero/AppData/Local/Programs/MiKTeX/tex/latex/rerunfilecheck/rerunfilecheck.sty" 1751104012 9684 a33a14b82ce60d6e77cb9be689d79ee6 ""
   "C:/Users/omero/AppData/Local/Programs/MiKTeX/tex/latex/url/url.sty" 1388490452 12796 8edb7d69a20b857904dd0ea757c14ec9 ""
   "c:/Users/omero/Desktop/STUDY_MATERIALS/2-Computational/Projects/Pagerank/Report_HW1_HW3/main.tex" 1788889345 2951 4a6467328a9de191e84e880125763e12 ""
-  "main.aux" 1788889347 6379 69423b1121eb3fd6da71390d0a589525 "pdflatex"
-  "main.out" 1788889347 6323 99a4d523171d686e6ceb2374826f194e "pdflatex"
+  "main.aux" 1788890061 6379 a07faeb26268b33710e61aad7076f441 "pdflatex"
+  "main.out" 1788890061 6323 e4adcf4509dc9e3caf6f88740632c928 "pdflatex"
   "main.tex" 1788889345 2951 4a6467328a9de191e84e880125763e12 ""
-  "main.toc" 1788889347 2210 cbe85707d1b9ae3a67bc02ee8da3e99d "pdflatex"
+  "main.toc" 1788890061 2210 d98a8eb0c51237f27196c84d652686b3 "pdflatex"
   "sec/ex01.tex" 1788835276 3474 a832e34229ce898451838e9461a41b7a ""
   "sec/ex02.tex" 1788834459 2117 284b1aa89635a78c87215400612d919b ""
   "sec/ex03.tex" 1788834459 2000 3694aef55d8eb4181fe35525ab8f9876 ""
   "sec/ex05.tex" 1788834459 909 0bcfa3fa9862aa7d5f7e53f72a6c3821 ""
   "sec/ex06.tex" 1788834459 2399 4cf9a41b57a76be57814d4a99b04050f ""
   "sec/ex07.tex" 1788834459 1346 7fa215e65c577f39ca51c9e57b72eed7 ""
-  "sec/ex08.tex" 1788886552 1744 bbef2b4e75b0402f1813a5b402cf59bf ""
+  "sec/ex08.tex" 1788890057 1277 5d1b1ccea172129de8a74626ab35ca94 ""
   "sec/ex09.tex" 1788834459 2111 81bf87a6ca372cf1811aa1e6b8ad7350 ""
   "sec/ex11.tex" 1788834459 3379 d5fbaffc12f2b473cb35d604759ba954 ""
   "sec/ex12.tex" 1788834460 2864 0f97aa157952e8f76ec1304838cae7ef ""

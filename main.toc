@@ -19,6 +19,6 @@
 \contentsline {section}{Exercise 6: The Scores Do Not Depend on the Numbering of the Pages}{19}{section*.62}%
 \contentsline {section}{Exercise 7: The Matrix $\mathbf {M}$ Is Column-Stochastic}{20}{section*.69}%
 \contentsline {section}{Exercise 8: The Product of Two Column-Stochastic Matrices}{21}{section*.73}%
-\contentsline {section}{Exercise 9: A Page with No Backlinks Gets the Score $m/n$}{22}{section*.79}%
-\contentsline {section}{Exercise 12: A Sixth Page That Links to Everyone}{23}{section*.86}%
-\contentsline {section}{Exercise 13: Ranking a Web with Two Subwebs Using $\mathbf {M}$}{24}{section*.92}%
+\contentsline {section}{Exercise 9: A Page with No Backlinks Gets the Score $m/n$}{22}{section*.78}%
+\contentsline {section}{Exercise 12: A Sixth Page That Links to Everyone}{23}{section*.85}%
+\contentsline {section}{Exercise 13: Ranking a Web with Two Subwebs Using $\mathbf {M}$}{24}{section*.91}%
