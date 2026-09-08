@@ -1,0 +1,71 @@
+\exheading{17}{The Choice of the Damping Factor $m$}{Ömer Özkan}
+
+\exblock{Problem Statement}
+
+We are asked how the value of $m$ should be chosen, and how this choice affects the rankings and the computation time.
+We answer with a short theoretical argument and with an experiment: we rank two webs for
+$m \in \{0.05,\ 0.15,\ 0.25,\ 0.50,\ 0.85,\ 0.99\}$,
+\begin{enumerate}
+  \item the 4-page web of Figure~2.1,
+  \item the Hollins dataset (6012 pages),
+\end{enumerate}
+and we record the number of iterations, the time and the ranking (script \texttt{ex17.py}).
+The power method starts from the uniform vector and stops when $\|\vx_{k+1}-\vx_k\|_1 < \texttt{tol} = 10^{-10}$.
+We state the tolerance because the number of iterations has no meaning without it.
+
+\exblock{What the Theory Says}
+
+\begin{itemize}
+  \item \textbf{Computation time.} The paper states that the error of the power method decreases like $|\lambda_2|^k$, where $\lambda_2$ is the second largest eigenvalue of $\M$, and that $|\lambda_2| \le 1-m$.
+  So after $k$ steps the error is at most about $(1-m)^k$, and to reach a tolerance \texttt{tol} we need at most about
+  \[
+    k \approx \frac{\ln \texttt{tol}}{\ln(1-m)}
+  \]
+  iterations. A larger $m$ means a smaller $1-m$ and therefore fewer iterations.
+  \item \textbf{Rankings.} Formula (3.2) says $\vx = (1-m)\A\vx + m\vs$: a part $1-m$ of the score comes from the links, a part $m$ is the same for every page.
+  For $m = 0$ the ranking uses only the links, but $\M = \A$ is not positive and the method may not converge (Section~\ref{sec:when}).
+  For $m \to 1$ every score tends to $1/n$ and the ranking becomes meaningless.
+\end{itemize}
+So $m$ is a compromise: small $m$ respects the link structure but is slow, large $m$ is fast but forgets the links.
+
+\exblock{Results: 4-Page Web (Figure 2.1)}
+
+\subsubsection*{Convergence Speed}
+
+Even on this tiny web the trend is clear: a larger $m$ needs fewer iterations (Table~\ref{tab:ex17-fig21}).
+
+\input{tables/ex17_fig21}
+
+\subsubsection*{Rankings}
+
+The order $1 > 3 > 4 > 2$ never changes.
+What changes is the distance between the scores: for $m = 0.05$ page~1 has $0.381$ and page~2 has $0.133$, for $m = 0.99$ all four scores are within $0.003$ of the uniform value $0.25$.
+
+\exblock{Results: Hollins Dataset (6012 Pages)}
+
+\subsubsection*{Convergence Speed}
+
+On the large web the saving is important: going from $m = 0.15$ to $m = 0.85$ divides the number of iterations by ten (Table~\ref{tab:ex17-hollins}).
+The last column is the estimate $\lceil \ln\texttt{tol}/\ln(1-m) \rceil$ from the theory; the measured numbers are always below it, so the bound $|\lambda_2| \le 1-m$ is confirmed and is quite close on this dataset.
+
+\input{tables/ex17_hollins}
+
+\subsubsection*{Rankings}
+
+The home page (page~2) is first for every $m$, but the rest of the top five moves.
+Page~425 (a library page with a list of web links) is 7th for $m = 0.15$ and 2nd for $m \ge 0.50$.
+We can explain this with formula (3.2).
+When $m$ is large all scores are close to $1/n$, so the score of page $i$ is approximately
+\[
+  x_i \approx \frac{1-m}{n}\sum_{j\in L_i}\frac{1}{n_j} + \frac{m}{n},
+\]
+and the ranking is decided by the sum $\sum_{j\in L_i} 1/n_j$: the number of backlinks, each weighted by one over the number of links of the page that gives it.
+Page~425 has only 87 backlinks, but 57 of them come from pages with one or two links, so its sum is $57.9$; page~37 has 454 backlinks but its sum is only $28.4$.
+For large $m$ the order of this sum is $2 > 425 > 37 > 38 > 52$, exactly the ranking we measure for $m = 0.99$.
+For small $m$ the \emph{quality} of the backlinks matters more, and page~425 goes down.
+
+\exblock{Conclusion}
+
+A larger $m$ makes the power method faster (about $\ln\texttt{tol}/\ln(1-m)$ iterations at most) but moves every score towards $1/n$, so the ranking loses the information of the links.
+On a small web the order does not change; on Hollins the top pages change already for $m = 0.25$.
+The value $m = 0.15$ used by Google is a reasonable compromise: the ranking follows the link structure, and the method converges in about a hundred iterations on a web of six thousand pages.

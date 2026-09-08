@@ -1,0 +1,86 @@
+\exheading{11}{Ranking the Modified Web with the Matrix $\M$}{Ömer Özkan}
+
+\exblock{Problem Statement}
+
+We take the web of Figure~2.1 and add a page~5 that links to page~3, where page~3 also links to page~5.
+We are asked to compute the new ranking by finding the eigenvector of $\M$ for $\lambda = 1$ with positive components summing to one, using $m = 0.15$.
+This is the same web as in Exercise~1, but there the ranking was computed with $\A$; here we use $\M$.
+
+\exblock{Web and Matrix Construction}
+
+The new web has $n = 5$ pages and the links
+\[
+  1 \to 2,3,4 \qquad 2 \to 3,4 \qquad 3 \to 1,5 \qquad 4 \to 1,3 \qquad 5 \to 3 .
+\]
+\begin{itemize}
+  \item Page~3 now has two outgoing links, so it splits its vote between page~1 and page~5 (entries $1/2$).
+  \item Page~5 has only one link, so it gives its whole vote to page~3 (entry $1$).
+  \item The other columns are the same as in Figure~2.1.
+\end{itemize}
+\[
+  \A = \begin{pmatrix}
+    0 & 0 & 1/2 & 1/2 & 0\\
+    1/3 & 0 & 0 & 0 & 0\\
+    1/3 & 1/2 & 0 & 1/2 & 1\\
+    1/3 & 1/2 & 0 & 0 & 0\\
+    0 & 0 & 1/2 & 0 & 0
+  \end{pmatrix},
+\]
+\[
+  \M = 0.85\,\A + 0.03\,\mathbf{1} =
+  \begin{pmatrix}
+    0.03 & 0.03 & 0.455 & 0.455 & 0.03\\
+    0.3133 & 0.03 & 0.03 & 0.03 & 0.03\\
+    0.3133 & 0.455 & 0.03 & 0.455 & 0.88\\
+    0.3133 & 0.455 & 0.03 & 0.03 & 0.03\\
+    0.03 & 0.03 & 0.455 & 0.03 & 0.03
+  \end{pmatrix},
+\]
+where $\mathbf{1}$ is the $5\times5$ matrix of ones and $0.3133 = 0.85/3 + 0.03$.
+Every column of $\M$ sums to one and every entry is at least $m/n = 0.03 > 0$.
+
+\exblock{Why the Ranking Is Unique}
+
+$\M$ is positive and column-stochastic, so by Lemma~3.2 of the paper $\dim\Vone{\M} = 1$.
+There is exactly one eigenvector for $\lambda = 1$ with positive entries and sum one, and the power method converges to it (Proposition~5).
+
+\exblock{Computation}
+
+We run the power method of Section~\ref{sec:implementation} on formula (3.2) with $m = 0.15$, starting from the uniform vector, with $\texttt{tol} = 10^{-12}$.
+It stops after 57 iterations with residual $6.6\cdot10^{-13}$, and gives
+\[
+  \vx \approx [0.237141,\ 0.097190,\ 0.348894,\ 0.138496,\ 0.178280] .
+\]
+\sumcheck{1.000}
+The smallest component is $0.097 > 0$, as the theory says.
+As a cross-check, the eigenvector of the dense matrix $\M$ computed with \texttt{numpy.linalg.eig} gives the same vector.
+
+The ranking is $3 > 1 > 5 > 4 > 2$.
+Table~\ref{tab:ex11} compares it with the ranking of the same web computed with $\A$ in Exercise~1.
+
+\begin{table}[H]\centering
+\begin{tabular}{cccc}
+\toprule
+\textbf{Page} & \textbf{Score with $\A$ (Ex.~1)} & \textbf{Score with $\M$, $m=0.15$} & \textbf{Rank} \\
+\midrule
+1 & 0.244898 & 0.237141 & 2 \\
+2 & 0.081633 & 0.097190 & 5 \\
+3 & 0.367347 & 0.348894 & 1 \\
+4 & 0.122449 & 0.138496 & 4 \\
+5 & 0.183673 & 0.178280 & 3 \\
+\bottomrule
+\end{tabular}
+\caption{The modified web ranked with $\A$ and with $\M$}
+\label{tab:ex11}
+\end{table}
+
+The order is the same in both cases.
+With $\M$ the scores are a little closer to each other: the large scores go down and the small scores go up, because a part $m$ of every vote is shared equally among all pages.
+
+\exblock{Conclusion}
+
+The new ranking with $\M$ and $m = 0.15$ is
+\[
+  \vx \approx [0.2371,\ 0.0972,\ 0.3489,\ 0.1385,\ 0.1783], \qquad 3 > 1 > 5 > 4 > 2 .
+\]
+Page~3 is the most important page, as the owners of page~3 wanted (see Exercise~1).

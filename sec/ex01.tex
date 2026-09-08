@@ -1,0 +1,83 @@
+\exheading{1}{Can the Owners of Page 3 Boost Their Score?}{Ömer Özkan}
+
+\exblock{Problem Statement}
+
+In the web of Figure~2.1 the score of page~3, computed with formula (2.1), is lower than the score of page~1.
+The owners of page~3 create a new page~5 that links to page~3, and page~3 also links to page~5.
+We are asked whether this boosts the score of page~3 above the score of page~1.
+Here the scores are computed with $\A$ only (formula (2.1)), so no damping.
+
+\exblock{Before: the Web of Figure 2.1}
+
+The paper gives the eigenvector $\vx = \frac{1}{31}(12,\,4,\,9,\,6)^T$:
+\[
+  x_1 \approx 0.387, \qquad x_3 \approx 0.290 .
+\]
+Page~1 is first and page~3 is third.
+
+\exblock{After: Matrix Construction}
+
+The new web has $n = 5$ pages.
+\begin{itemize}
+  \item Page~5 links only to page~3, so it gives its whole vote to page~3 (entry $1$ in column~5).
+  \item Page~3 now links to page~1 and page~5, so it splits its vote (entries $1/2$ in column~3).
+  \item Nothing else changes.
+\end{itemize}
+\[
+  \A = \begin{pmatrix}
+    0 & 0 & 1/2 & 1/2 & 0\\
+    1/3 & 0 & 0 & 0 & 0\\
+    1/3 & 1/2 & 0 & 1/2 & 1\\
+    1/3 & 1/2 & 0 & 0 & 0\\
+    0 & 0 & 1/2 & 0 & 0
+  \end{pmatrix}.
+\]
+
+\exblock{Eigenvector Analysis}
+
+We solve $\A\vx = \vx$.
+The vector $\mathbf{v} = (12,\,4,\,18,\,6,\,9)^T$ satisfies it, as we check row by row:
+\[
+  \tfrac{18}{2}+\tfrac{6}{2} = 12,\quad
+  \tfrac{12}{3} = 4,\quad
+  \tfrac{12}{3}+\tfrac{4}{2}+\tfrac{6}{2}+9 = 18,\quad
+  \tfrac{12}{3}+\tfrac{4}{2} = 6,\quad
+  \tfrac{18}{2} = 9 .
+\]
+The web is strongly connected, so $\dim\Vone{\A} = 1$ and this is the only ranking (Exercise~10 of the paper; \texttt{numpy} confirms that $1$ is a simple eigenvalue).
+Scaling to sum one gives
+\[
+  \vx = \tfrac{1}{49}(12,\,4,\,18,\,6,\,9)^T \approx [0.244898,\ 0.081633,\ 0.367347,\ 0.122449,\ 0.183673].
+\]
+\sumcheck{1.000}
+Our power method with $m = 0$ (script \texttt{ex01.py}) gives the same numbers after 84 iterations.
+
+Table~\ref{tab:ex1} compares the two webs. We also show the unscaled values, because they explain what happens.
+
+\begin{table}[H]\centering
+\begin{tabular}{ccccc}
+\toprule
+\textbf{Page} & \textbf{Before (unscaled)} & \textbf{Before} & \textbf{After (unscaled)} & \textbf{After} \\
+\midrule
+1 & 12 & 0.387097 & 12 & 0.244898 \\
+2 & 4 & 0.129032 & 4 & 0.081633 \\
+3 & 9 & 0.290323 & \textbf{18} & \textbf{0.367347} \\
+4 & 6 & 0.193548 & 6 & 0.122449 \\
+5 & --- & --- & 9 & 0.183673 \\
+\midrule
+sum & 31 & 1 & 49 & 1 \\
+\bottomrule
+\end{tabular}
+\caption{Scores of Figure~2.1 before and after the new page~5}
+\label{tab:ex1}
+\end{table}
+
+\begin{itemize}
+  \item \textbf{Feedback loop.} Page~3 gives half of its score to page~5, and page~5 gives all of it back to page~3. So page~3 keeps what it had (the votes of pages 1, 2 and 4 are unchanged: $4 + 2 + 3 = 9$) and adds the vote of page~5, which is $18/2 = 9$. Its unscaled value doubles from 9 to 18.
+  \item \textbf{Page 1 does not lose votes.} Its unscaled value stays 12. Before, it received the whole vote of page~3, that is $9$. Now it receives only half of the vote of page~3, but page~3 is twice as big, so this is again $18/2 = 9$; plus $3$ from page~4 as before. Its scaled score goes down only because the total grows from 31 to 49.
+\end{itemize}
+
+\exblock{Conclusion}
+
+Yes. After the trick, page~3 has score $18/49 \approx 0.367$ and page~1 has $12/49 \approx 0.245$, so page~3 is now the most important page.
+This shows that formula (2.1) can be manipulated by adding pages.

@@ -1,0 +1,25 @@
+\exheading{5}{Importance Score of a Page with No Backlinks}{Zeynep Sude Ulaş}
+
+\exblock{Problem Statement}
+
+We are asked to prove that, in any web, the importance score of a page with no backlinks is zero.
+Here the score is defined by formula (2.1), that is, by the matrix $\A$.
+
+\exblock{Proof}
+
+By formula (2.1) the score of page $k$ is
+\[
+  x_k = \sum_{j \in L_k} \frac{x_j}{n_j},
+\]
+where $L_k$ is the set of pages that link to page $k$.
+If page $k$ has no backlinks, then $L_k = \varnothing$.
+A sum over the empty set is zero, so
+\[
+  x_k = 0 .
+\]
+In matrix language: page $k$ has no backlinks means that row $k$ of $\A$ is zero, so $x_k = (\A\vx)_k = 0$ for every $\vx \in \Vone{\A}$.
+
+\exblock{Conclusion}
+
+With formula (2.1), a page that nobody links to has importance score $x_k = 0$, whatever the rest of the web looks like.
+Exercise~9 shows that with the matrix $\M$ this score becomes $m/n > 0$.

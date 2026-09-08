@@ -1,0 +1,59 @@
+\exheading{13}{Ranking a Web with Two Subwebs Using $\M$}{Zeynep Sude Ulaş}
+
+\exblock{Problem Statement}
+
+We are asked to construct a web consisting of two or more subwebs and to determine the ranking given by formula (3.1), that is, by the matrix $\M = (1-m)\A + m\Smat$.
+We use $m = 0.15$.
+
+\exblock{Web and Matrix Construction}
+
+We take five pages in two disconnected subwebs,
+\[
+  W_1 = \{1,2\}, \qquad W_2 = \{3,4,5\},
+\]
+with the links $1 \to 2$, $2 \to 1$, $3 \to 4$, $4 \to 3$ and $5 \to 3$.
+There is no link between $W_1$ and $W_2$, and every page has exactly one outgoing link, so
+\[
+  \A = \begin{pmatrix}
+    0&1&0&0&0\\ 1&0&0&0&0\\ 0&0&0&1&1\\ 0&0&1&0&0\\ 0&0&0&0&0
+  \end{pmatrix},
+  \qquad
+  \M = 0.85\,\A + 0.03\,\mathbf{1} = \begin{pmatrix}
+    0.03&0.88&0.03&0.03&0.03\\
+    0.88&0.03&0.03&0.03&0.03\\
+    0.03&0.03&0.03&0.88&0.88\\
+    0.03&0.03&0.88&0.03&0.03\\
+    0.03&0.03&0.03&0.03&0.03
+  \end{pmatrix},
+\]
+where $\mathbf{1}$ is the $5 \times 5$ matrix of ones and $0.03 = m/n$.
+
+\exblock{Why $\A$ Is Not Enough}
+
+The web has two subwebs, so $\dim\Vone{\A} = 2$ (the eigenvalues of $\A$ are $1,-1,1,-1,0$, script \texttt{ex13.py}).
+Any combination $a\,(1,1,0,0,0)^T + b\,(0,0,1,1,0)^T$ is an eigenvector, so $\A$ gives no unique ranking and cannot compare a page of $W_1$ with a page of $W_2$.
+
+\exblock{Ranking with $\M$}
+
+$\M$ is positive, so $\dim\Vone{\M} = 1$ (Lemma~3.2) and the ranking is unique.
+Solving $\M\vx = \vx$ with $\sum_i x_i = 1$ gives
+\[
+  \vx = \left[\tfrac{1}{5},\ \tfrac{1}{5},\ \tfrac{54}{185},\ \tfrac{1029}{3700},\ \tfrac{3}{100}\right]
+  \approx [0.200000,\ 0.200000,\ 0.291892,\ 0.278108,\ 0.030000].
+\]
+\sumcheck{1.000}
+Our power method gives the same vector after 165 iterations ($\texttt{tol} = 10^{-12}$).
+
+\begin{itemize}
+  \item Pages 1 and 2 tie exactly: the subweb $1 \leftrightarrow 2$ is symmetric, and formula (3.2) gives $x_1 = 0.85\,x_2 + 0.03$ and $x_2 = 0.85\,x_1 + 0.03$, so $x_1 = x_2 = 0.2$.
+  \item Page 5 has no backlinks, so its score is exactly $m/n = 0.03$ (Exercise~9).
+  \item Page 3 is above page 4 because it receives the votes of both page 4 and page 5, while page 4 receives only the vote of page 3.
+\end{itemize}
+
+\exblock{Conclusion}
+
+The ranking given by formula (3.1) is
+\[
+  3 > 4 > 1 = 2 > 5 .
+\]
+Although the web consists of two disconnected subwebs, the matrix $\M$ produces a unique ranking and makes the pages of different subwebs comparable.

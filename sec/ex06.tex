@@ -1,0 +1,38 @@
+\exheading{6}{The Scores Do Not Depend on the Numbering of the Pages}{Zeynep Sude Ulaş}
+
+\exblock{Problem Statement}
+
+We are asked to prove that the way the pages are numbered has no effect on the importance scores.
+Let $\A$ be the link matrix of a web with $n$ pages, and let $\tilde{\A}$ be the link matrix of the same web after the indices of pages $i$ and $j$ are exchanged.
+Let $\mathbf{P}$ be the permutation matrix obtained by exchanging rows $i$ and $j$ of the identity matrix.
+
+\exblock{Proof}
+
+\subsubsection*{Step 1: $\tilde{\A} = \mathbf{P}\A\mathbf{P}$}
+
+Multiplying on the left, $\mathbf{P}\A$, exchanges rows $i$ and $j$ of $\A$.
+Multiplying on the right, $\A\mathbf{P}$, exchanges columns $i$ and $j$.
+When we rename page $i$ as page $j$ and vice versa, the row of page $i$ becomes the row of page $j$ and the column of page $i$ becomes the column of page $j$.
+So both the rows and the columns are exchanged, which is exactly $\mathbf{P}\A\mathbf{P}$.
+Also $\mathbf{P}^2 = \mathbf{I}$, because exchanging twice gives the identity, and therefore $\mathbf{P}^{-1} = \mathbf{P}$.
+
+\subsubsection*{Step 2: $\mathbf{y} = \mathbf{P}\vx$ is an eigenvector of $\tilde{\A}$}
+
+Suppose $\A\vx = \lambda\vx$ and define $\mathbf{y} = \mathbf{P}\vx$. Then
+\[
+  \tilde{\A}\mathbf{y} = (\mathbf{P}\A\mathbf{P})(\mathbf{P}\vx) = \mathbf{P}\A(\mathbf{P}^2)\vx = \mathbf{P}\A\vx = \mathbf{P}(\lambda\vx) = \lambda\,\mathbf{P}\vx = \lambda\mathbf{y}.
+\]
+So $\mathbf{y}$ is an eigenvector of $\tilde{\A}$ with the same eigenvalue $\lambda$.
+
+\subsubsection*{Step 3: the scores are unchanged}
+
+Take $\lambda = 1$ and let $\vx$ be the score vector, $\A\vx = \vx$.
+Then $\mathbf{y} = \mathbf{P}\vx$ is the score vector of the renamed web.
+But $\mathbf{P}\vx$ is just $\vx$ with the entries $i$ and $j$ exchanged: the numbers are the same, only their positions move.
+So page $i$ (now called page $j$) has the same score as before.
+Any permutation of the $n$ indices is a product of such exchanges, so the same holds for any renumbering: if $\mathbf{Q}$ is a permutation matrix, $\hat{\A} = \mathbf{Q}\A\mathbf{Q}^{-1}$ and $\hat{\A}(\mathbf{Q}\vx) = \mathbf{Q}\A\vx = \mathbf{Q}\vx$.
+
+\exblock{Conclusion}
+
+Renumbering the pages permutes the entries of the score vector in the same way, and the scores themselves do not change.
+The importance scores are therefore independent of the numbering of the pages.

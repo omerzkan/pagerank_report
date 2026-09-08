@@ -1,0 +1,25 @@
+\contentsline {part}{I\hspace {1em}Homework 1: The PageRank Project}{3}{part.1}%
+\contentsline {section}{\numberline {1}Introduction}{3}{section.1}%
+\contentsline {section}{\numberline {2}The PageRank Algorithm}{4}{section.2}%
+\contentsline {subsection}{\numberline {2.1}How it works}{4}{subsection.2.1}%
+\contentsline {subsection}{\numberline {2.2}Why it works}{5}{subsection.2.2}%
+\contentsline {subsection}{\numberline {2.3}When it does not work}{5}{subsection.2.3}%
+\contentsline {section}{\numberline {3}Implementation and Results}{6}{section.3}%
+\contentsline {subsection}{\numberline {3.1}Data structures}{6}{subsection.3.1}%
+\contentsline {subsection}{\numberline {3.2}The solver}{6}{subsection.3.2}%
+\contentsline {subsection}{\numberline {3.3}Tests on the two webs of the paper}{7}{subsection.3.3}%
+\contentsline {subsection}{\numberline {3.4}Results on the Hollins dataset}{7}{subsection.3.4}%
+\contentsline {section}{Exercise 11: Ranking the Modified Web with the Matrix $\mathbf {M}$}{9}{section*.24}%
+\contentsline {section}{Exercise 17: The Choice of the Damping Factor $m$}{11}{section*.31}%
+\contentsline {part}{II\hspace {1em}Homework 3: Ten Exercises from the Paper}{13}{part.2}%
+\contentsline {section}{About Part II}{13}{section*.43}%
+\contentsline {section}{Exercise 1: Can the Owners of Page 3 Boost Their Score?}{14}{section*.44}%
+\contentsline {section}{Exercise 2: Dimension of $V_1(\mathbf {A})$ for a Web with Three Subwebs}{16}{section*.51}%
+\contentsline {section}{Exercise 3: A Connected Web Whose Ranking Is Still Not Unique}{17}{section*.56}%
+\contentsline {section}{Exercise 5: Importance Score of a Page with No Backlinks}{18}{section*.61}%
+\contentsline {section}{Exercise 6: The Scores Do Not Depend on the Numbering of the Pages}{19}{section*.65}%
+\contentsline {section}{Exercise 7: The Matrix $\mathbf {M}$ Is Column-Stochastic}{20}{section*.72}%
+\contentsline {section}{Exercise 8: The Product of Two Column-Stochastic Matrices}{21}{section*.76}%
+\contentsline {section}{Exercise 9: A Page with No Backlinks Gets the Score $m/n$}{22}{section*.82}%
+\contentsline {section}{Exercise 12: A Sixth Page That Links to Everyone}{23}{section*.89}%
+\contentsline {section}{Exercise 13: Ranking a Web with Two Subwebs Using $\mathbf {M}$}{24}{section*.95}%

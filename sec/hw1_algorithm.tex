@@ -1,0 +1,110 @@
+\clearpage
+\section{The PageRank Algorithm}
+
+\subsection{How it works}
+
+\subsubsection*{The idea}
+
+A link from page $j$ to page $k$ is a \emph{vote} of page $j$ for page $k$.
+A vote from an important page should count more than a vote from an unimportant page.
+Also, a page should not become powerful only by linking to many pages: each page has one vote in total, and it divides this vote equally among its outgoing links.
+
+Let $L_k$ be the set of pages that link to page $k$ (the \emph{backlinks} of $k$), and let $n_j$ be the number of outgoing links of page $j$.
+The paper defines the score of page $k$ by formula (2.1):
+\[
+  x_k = \sum_{j \in L_k} \frac{x_j}{n_j}.
+\]
+
+\subsubsection*{The link matrix $\A$}
+
+The $n$ equations of formula (2.1) can be written as one matrix equation $\A\vx = \vx$, where
+\[
+  A_{ij} = \begin{cases} 1/n_j & \text{if page $j$ links to page $i$,}\\ 0 & \text{otherwise.}\end{cases}
+\]
+So column $j$ of $\A$ describes the outgoing links of page $j$, and row $i$ describes the backlinks of page $i$.
+Every column sums to one (page $j$ divides its whole vote), so $\A$ is \emph{column-stochastic}.
+The score vector $\vx$ is an eigenvector of $\A$ with eigenvalue~$1$.
+
+\begin{itemize}
+  \item For the four-page web of Figure~2.1 the paper finds $\vx = \frac{1}{31}(12,\,4,\,9,\,6)^T$, so page~1 is the most important.
+  \item Every column-stochastic matrix has $1$ as an eigenvalue (Proposition~1 of the paper), so a solution always exists when there are no dangling nodes.
+\end{itemize}
+
+\subsubsection*{The matrix $\M$}
+
+The matrix $\A$ has two problems (see Section~\ref{sec:when}).
+To fix them the paper mixes $\A$ with the matrix $\Smat$ whose entries are all $1/n$, using a number $m \in [0,1]$ called the \emph{damping factor}:
+\[
+  \M = (1-m)\A + m\Smat \qquad\text{(formula (3.1))}.
+\]
+Google used $m = 0.15$, and we use the same value.
+Because $\Smat\vx = \vs$ when $\sum_i x_i = 1$, where $\vs$ is the vector with all entries $1/n$, the equation $\M\vx = \vx$ can also be written as
+\[
+  \vx = (1-m)\A\vx + m\vs \qquad\text{(formula (3.2))}.
+\]
+Formula (3.2) is the form we use in the code: we never build $\M$, we only multiply by the sparse matrix $\A$ and add the constant vector $m\vs$.
+
+\subsubsection*{The power method}
+
+For a web with billions of pages we cannot compute eigenvectors directly.
+The paper uses the \emph{power method}: start from any positive vector $\vx_0$ with $\|\vx_0\|_1 = 1$ and repeat
+\[
+  \vx_{k+1} = \M\vx_k = (1-m)\A\vx_k + m\vs .
+\]
+The sequence $\vx_k$ converges to the score vector $\mathbf{q}$ (Theorem~4.2 of the paper).
+We stop when two consecutive vectors are close in the 1-norm, $\|\vx_{k+1}-\vx_k\|_1 < \texttt{tol}$.
+Each step costs one product $\A\vx$, which is cheap because $\A$ is sparse: on Hollins only $0.066\%$ of the entries of $\A$ are non-zero.
+
+\subsection{Why it works}
+
+The proofs are in Section~3.2 and Section~4 of the paper. We summarise the chain of ideas.
+
+\begin{enumerate}
+  \item \textbf{$\M$ is column-stochastic} (Exercise~7). So $1$ is an eigenvalue of $\M$ and $\Vone{\M}$ is not empty.
+  \item \textbf{$\M$ is positive.} Every entry of $\Smat$ is $1/n > 0$, so for $m > 0$ every entry $M_{ij} \geq m/n > 0$.
+  \item \textbf{A positive column-stochastic matrix has a one-dimensional $V_1$} (Lemma~3.2).
+  Any eigenvector in $\Vone{\M}$ has all positive or all negative entries (Proposition~2), and two independent vectors could be combined into a vector with mixed signs (Proposition~3), which is impossible.
+  So there is exactly one score vector $\mathbf{q}$ with positive entries and $\sum_i q_i = 1$.
+  \item \textbf{The power method converges to $\mathbf{q}$} (Proposition~5).
+  Write $\vx_0 = \mathbf{q} + \mathbf{v}$ with $\sum_j v_j = 0$.
+  Then $\M^k\vx_0 = \mathbf{q} + \M^k\mathbf{v}$, and Proposition~4 gives $\|\M^k\mathbf{v}\|_1 \le c^k\|\mathbf{v}\|_1$ with $c < 1$.
+  So the error goes to zero.
+  \item \textbf{Speed.} The error decreases roughly like $|\lambda_2|^k$, where $\lambda_2$ is the second largest eigenvalue of $\M$, and the paper states that $|\lambda_2| \le 1-m$.
+  So a larger $m$ gives faster convergence. We check this in Exercise~17.
+\end{enumerate}
+
+\subsection{When it does not work}
+\label{sec:when}
+
+\subsubsection*{Disconnected webs: the ranking of $\A$ is not unique}
+
+If the web (seen as an undirected graph) has $r$ disconnected pieces, then $\dim\Vone{\A} \ge r$ (Section~2.2.1 of the paper).
+Figure~2.2 has two pieces and $\dim\Vone{\A} = 2$: every combination of the two basis vectors is an eigenvector, so $\A$ does not tell us which one is ``the'' ranking.
+The matrix $\M$ solves this because it is positive, so $\dim\Vone{\M} = 1$ for every web (Exercises~2, 3 and 13).
+
+\subsubsection*{Dangling nodes: $\A$ loses mass}
+
+A \emph{dangling node} is a page with no outgoing links.
+Its column in $\A$ is all zeros, so $\A$ is only \emph{sub}-stochastic and $1$ may not be an eigenvalue at all.
+The paper does not treat this case, but the Hollins dataset has 3189 dangling pages (53\% of all pages), so our code must handle it.
+We use the standard fix: a dangling page gives its vote equally to all $n$ pages.
+In the code this means adding the number $\frac{1}{n}\sum_{j \text{ dangling}} x_j$ to every entry of $\A\vx$.
+After this fix the matrix is column-stochastic again and the theory above applies.
+
+\subsubsection*{The value $m = 0$: the power method may not converge}
+
+With $m = 0$ we have $\M = \A$, which is not positive.
+Then the power method can fail.
+On Figure~2.2 we ran the iteration $\vx_{k+1} = \A\vx_k$ from the starting vector $\vx_0 = (0.5,\,0.1,\,0.2,\,0.1,\,0.1)^T$: after 1000 steps the residual $\|\vx_{k+1}-\vx_k\|_1$ was still $1.0$, because $\A$ has the eigenvalue $-1$ and the iterates jump between two vectors.
+With $m = 0.15$ the same start converges in 143 steps to $(0.2,\,0.2,\,0.285,\,0.285,\,0.03)^T$, the vector given in the paper.
+
+\subsubsection*{The value $m$ close to $1$: the links are ignored}
+
+When $m \to 1$, $\M \to \Smat$ and all scores tend to $1/n$.
+The ranking then says nothing about the web.
+The choice of $m$ is therefore a compromise between speed and information (Exercise~17).
+
+\subsubsection*{Link spam}
+
+Because a page can raise its score by creating pages that link to it, PageRank can be manipulated.
+Exercise~1 shows a small example of this.

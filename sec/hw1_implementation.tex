@@ -1,0 +1,110 @@
+\clearpage
+\section{Implementation and Results}
+\label{sec:implementation}
+
+The code is written in Python with NumPy only (no SciPy, no sparse library).
+It is in our repository~\cite{repo}. The files are listed in Table~\ref{tab:files}.
+
+\begin{table}[H]\centering
+\begin{tabular}{ll}
+\toprule
+\textbf{File} & \textbf{Content} \\
+\midrule
+\texttt{toolkit.py} & the matrices, the sparse storage, the power method, the file reader \\
+\texttt{webs.py} & every small web used in this report, written as a dictionary \\
+\texttt{run\_paper.py} & tests against the numbers printed in the paper \\
+\texttt{hollins\_main.py} & PageRank on the Hollins dataset \\
+\texttt{ex01.py}, \dots, \texttt{ex17.py} & one script per computational exercise \\
+\bottomrule
+\end{tabular}
+\caption{Files of the project}
+\label{tab:files}
+\end{table}
+
+\subsection{Data structures}
+
+\subsubsection*{A web is a dictionary}
+
+A web is stored as a Python dictionary \verb|{page: [pages it links to]}| with pages numbered $1,\dots,n$ as in the paper.
+For example Figure~2.1 is
+\begin{verbatim}
+FIG_2_1 = {1: [2, 3, 4], 2: [3, 4], 3: [1], 4: [1, 3]}
+\end{verbatim}
+A page with an empty list is a dangling node.
+
+\subsubsection*{Dense matrix for small webs}
+
+The function \texttt{build\_A} fills an $n \times n$ NumPy array with $A_{ij} = 1/n_j$.
+We use it only for the small webs, to print $\A$ and $\M$ and to compute all eigenvalues with \texttt{numpy.linalg.eig} for cross-checking (for example to find $\dim\Vone{\A}$).
+The dense matrix is \emph{not} used by the solver.
+
+\subsubsection*{Sparse matrix (CSR) for the dataset}
+
+For Hollins a dense $\A$ would need $6012^2 \cdot 8$ bytes $\approx 289$~MB, but only $23\,875$ entries are non-zero.
+We store $\A$ in the \emph{compressed sparse row} format with three arrays, built by hand in \texttt{build\_csr}:
+\begin{itemize}
+  \item \texttt{AA}: the non-zero values of $\A$, read row by row;
+  \item \texttt{JA}: the column index of each value in \texttt{AA};
+  \item \texttt{IA}: for each row $i$, the position in \texttt{AA} where row $i$ starts (length $n+1$).
+\end{itemize}
+The non-zeros of row $i$ are \texttt{AA[IA[i]:IA[i+1]]}.
+The three arrays for Hollins take $0.43$~MB, about 670 times less than the dense matrix.
+The function \texttt{csr\_matvec} computes $\mathbf{y} = \A\vx$ row by row:
+\[
+  y_i = \sum_{k=\texttt{IA}[i]}^{\texttt{IA}[i+1]-1} \texttt{AA}[k]\; x_{\texttt{JA}[k]} .
+\]
+We tested that this product equals the dense product \texttt{A @ v} on a random vector (difference $0$).
+
+\subsection{The solver}
+
+The only solver of the project is the function \texttt{pagerank(links, n, m, tol)}.
+It starts from $\vx_0 = (1/n,\dots,1/n)^T$ and repeats three steps until $\|\vx_{k+1}-\vx_k\|_1 < \texttt{tol}$:
+\begin{enumerate}[label=\textbf{Step \Alph*.},leftmargin=*]
+  \item $\mathbf{y} = \A\vx_k$ with the CSR product.
+  \item $\mathbf{y} \leftarrow \mathbf{y} + \frac{1}{n}\sum_{j\ \text{dangling}} (\vx_k)_j$: the mass of the dangling pages is given back, equally to all pages.
+  \item $\vx_{k+1} = (1-m)\mathbf{y} + m\vs$: this is formula (3.2).
+\end{enumerate}
+After Step~C the sum of $\vx_{k+1}$ is already $1$ in exact arithmetic; we divide by the sum once more only to remove rounding errors.
+The function returns the vector $\vx$, the number of iterations $k$ and the last residual $\|\vx_{k+1}-\vx_k\|_1 = \|\M\vx_k - \vx_k\|_1$.
+If the residual is not below \texttt{tol}, the method did not converge.
+
+With $m = 0$ the same function iterates $\vx_{k+1} = \A\vx_k$, so we also use it to rank a web with formula (2.1) (Exercises~1 and~12).
+
+\subsubsection*{Reading the dataset}
+
+The function \texttt{load\_dat} reads \texttt{hollins.dat}: the first line gives $n$ and the number of links, then $n$ lines give the URL of each page, then one link per line as ``source target''.
+Following the paper, a link from a page to itself would be ignored, and a repeated link would be counted once.
+In the Hollins file there are no self-links and no repeated links.
+
+\subsection{Tests on the two webs of the paper}
+
+Before using the dataset we checked every number that the paper prints (script \texttt{run\_paper.py}).
+Table~\ref{tab:paper-checks} shows that all of them agree.
+For each value the allowed difference is one unit of the last printed decimal of the paper.
+
+\input{tables/paper_checks}
+
+The ranking for Figure~2.1 with $\M$ is
+\[
+  \vx \approx [0.368151,\ 0.141809,\ 0.287962,\ 0.202078]
+\]
+\sumcheck{1.000}
+and for Figure~2.2 it is exactly $[0.2,\ 0.2,\ 0.285,\ 0.285,\ 0.03]$, as in Example~2 of the paper.
+The order of Figure~2.1 is $1 > 3 > 4 > 2$, the same order as with $\A$.
+
+We also tested the dangling-node fix on a small web (Figure~2.1 without the link $3 \to 1$, so page~3 is dangling): the solver and a dense eigenvector computation on the corrected matrix give the same vector (difference $4\cdot10^{-14}$).
+
+\subsection{Results on the Hollins dataset}
+\label{sec:hollins}
+
+Table~\ref{tab:hollins} summarises the run of \texttt{hollins\_main.py} with $m = 0.15$ and $\texttt{tol} = 10^{-12}$.
+
+\input{tables/hollins_summary}
+
+The most important page is the home page of the university, with a score about 120 times larger than the uniform score $1/n = 0.000166$.
+Table~\ref{tab:hollins-top} lists the ten best pages.
+The pages of the admissions area are high because many pages of the site link to them.
+
+\input{tables/hollins_top10}
+
+Every score is at least $m/n = 2.5\cdot10^{-5}$, as formula (3.2) predicts (the smallest score is $5.8\cdot10^{-5}$).

@@ -1,0 +1,59 @@
+\exheading{12}{A Sixth Page That Links to Everyone}{Ömer Özkan}
+
+\exblock{Problem Statement}
+
+We add to the web of Exercise~11 a sixth page that links to every other page, but to which no page links.
+We are asked to rank the pages with $\A$ and then with $\M$ ($m = 0.15$), and to compare the results.
+
+\exblock{Web and Matrix Construction}
+
+The new web has $n = 6$ pages.
+\begin{itemize}
+  \item Page~6 has five outgoing links, so column~6 has the entry $1/5$ in rows 1 to 5.
+  \item Nobody links to page~6, so row~6 is zero.
+  \item Page~6 is \emph{not} a dangling node: it has outgoing links, so its column sums to one. What it lacks is backlinks.
+\end{itemize}
+\[
+  \A = \begin{pmatrix}
+    0 & 0 & 1/2 & 1/2 & 0 & 1/5\\
+    1/3 & 0 & 0 & 0 & 0 & 1/5\\
+    1/3 & 1/2 & 0 & 1/2 & 1 & 1/5\\
+    1/3 & 1/2 & 0 & 0 & 0 & 1/5\\
+    0 & 0 & 1/2 & 0 & 0 & 1/5\\
+    0 & 0 & 0 & 0 & 0 & 0
+  \end{pmatrix}.
+\]
+
+\exblock{Ranking with $\A$ and with $\M$}
+
+Both rankings are computed with the same solver (script \texttt{ex12.py}): $m = 0$ gives formula (2.1), $m = 0.15$ gives formula (3.2).
+Table~\ref{tab:ex12} shows that the order of the pages is the same in both cases, and that only page~6 changes its nature: from $0$ to $m/n$.
+
+\begin{table}[H]\centering
+\begin{tabular}{cccc}
+\toprule
+\textbf{Page} & \textbf{Score with $\A$} & \textbf{Score with $\M$, $m=0.15$} & \textbf{Rank} \\
+\midrule
+1 & 0.244898 & 0.231212 & 2 \\
+2 & 0.081633 & 0.094760 & 5 \\
+3 & 0.367347 & 0.340172 & 1 \\
+4 & 0.122449 & 0.135033 & 4 \\
+5 & 0.183673 & 0.173823 & 3 \\
+6 & \textbf{0.000000} & \textbf{0.025000} & 6 \\
+\bottomrule
+\end{tabular}
+\caption{The six-page web ranked with $\A$ and with $\M$}
+\label{tab:ex12}
+\end{table}
+
+\begin{itemize}
+  \item \textbf{With $\A$.} Page~6 has no backlinks, so $x_6 = 0$ (Exercise~5). Its column then multiplies $x_6 = 0$ and has no effect: the other five scores are exactly those of Exercise~1, $\frac{1}{49}(12,4,18,6,9)$.
+  \item \textbf{With $\M$.} Page~6 gets exactly $x_6 = m/n = 0.15/6 = 0.025$ (Exercise~9). The other five scores are $0.975$ times the scores of Exercise~11, for example $0.975 \times 0.237141 = 0.231212$.
+  The reason is simple: page~6 gives $\frac{1}{5}x_6$ to every page, the same amount to all, just like the term $m\vs$. So pages 1 to 5 satisfy the same equations as in Exercise~11 with a different constant, and the solution of such a system is proportional to the constant. The proportions do not change, and the sum of the five scores must be $1 - 0.025 = 0.975$.
+\end{itemize}
+
+\exblock{Conclusion}
+
+The order is $3 > 1 > 5 > 4 > 2 > 6$ with both matrices.
+With $\A$ the new page scores $0$; with $\M$ it scores $m/n = 0.025$, and the other pages keep their relative importance.
+Linking to everyone does not help a page that nobody links to: the score comes from the backlinks, not from the outgoing links.

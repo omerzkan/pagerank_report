@@ -1,0 +1,38 @@
+\section{Introduction}
+
+\subsection*{The task}
+
+The homework asks us to read the paper of Bryan and Leise~\cite{bryanleise}, to write our own code for the PageRank algorithm, to test it on the two webs of the paper (Figure~2.1 and Figure~2.2), to test it on the given dataset, and to solve two exercises of our choice.
+We chose \textbf{Exercise~11} (a new page is added to the web and the ranking is computed with the matrix $\M$) and \textbf{Exercise~17} (how the damping factor $m$ should be chosen).
+
+\subsection*{The dataset}
+
+The dataset is the \emph{Hollins} web graph: 6012 pages of the website of Hollins University and 23\,875 links between them.
+It is stored in the file \texttt{hollins.dat}.
+
+\subsection*{Division of the work}
+
+Both of us worked on the algorithm, the code and the tests.
+The exercises were divided as in Table~\ref{tab:split}.
+Both of us are ready to explain every part of the report.
+
+\begin{table}[H]\centering
+\begin{tabular}{lll}
+\toprule
+\textbf{Part} & \textbf{Ömer Özkan} & \textbf{Zeynep Sude Ulaş} \\
+\midrule
+Homework 1 & Exercises 11, 17 & --- \\
+Homework 3 & Exercises 1, 8, 9, 12 & Exercises 2, 3, 5, 6, 7, 13 \\
+\bottomrule
+\end{tabular}
+\caption{Who solved which exercise}
+\label{tab:split}
+\end{table}
+
+\subsection*{Notation}
+
+We use the notation of the paper.
+A web has $n$ pages, numbered $1,\dots,n$.
+The vector $\vx = (x_1,\dots,x_n)^T$ contains the importance scores, and we always scale it so that $\sum_i x_i = 1$.
+$\Vone{\A}$ is the eigenspace of the matrix $\A$ for the eigenvalue~$1$.
+When we quote a formula of the paper we use the paper's number, for example ``formula (2.1)'' or ``formula (3.2)''.

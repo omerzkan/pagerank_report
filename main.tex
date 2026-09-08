@@ -1,0 +1,94 @@
+\documentclass[11pt,a4paper]{article}
+
+\usepackage[margin=2.5cm]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{mathptmx}
+\usepackage{microtype}
+\usepackage{amsmath,amssymb}
+\usepackage{booktabs}
+\usepackage{enumitem}
+\usepackage{graphicx}
+\usepackage{caption}
+\usepackage{float}
+\usepackage[hidelinks]{hyperref}
+
+\setlist{nosep}
+\captionsetup{font=small,labelfont=bf}
+
+% ---------------------------------------------------------------
+% small macros used in every exercise
+% ---------------------------------------------------------------
+\newcommand{\vx}{\mathbf{x}}
+\newcommand{\vs}{\mathbf{s}}
+\newcommand{\ve}{\mathbf{e}}
+\newcommand{\A}{\mathbf{A}}
+\newcommand{\M}{\mathbf{M}}
+\newcommand{\Smat}{\mathbf{S}}
+\newcommand{\Vone}[1]{V_1(#1)}
+\newcommand{\sumcheck}[1]{\begin{center}\small (sum $= #1$)\end{center}}
+
+% Exercise heading: number, title, author
+\newcommand{\exheading}[3]{%
+  \clearpage
+  \section*{Exercise #1: #2}
+  \addcontentsline{toc}{section}{Exercise #1: #2}
+  %\begin{flushright}\small\textit{Solved by #3}\end{flushright}
+  \begin{flushright}\small\textit{}\end{flushright}
+  
+  }
+\newcommand{\exblock}[1]{\subsection*{#1}}
+
+\title{\textbf{The PageRank Algorithm}\\[0.4em]
+  \large Homework 1 and Homework 3\\[0.3em]
+  \normalsize Computational Linear Algebra for Large Scale Problems\\
+  Politecnico di Torino, A.Y.~2025/2026}
+\author{Ömer Özkan (s360761) \and Zeynep Sude Ulaş (s364189)}
+\date{September 2026}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+\noindent
+This report is our work on the paper \emph{The \$25,000,000,000 Eigenvector: The Linear Algebra Behind Google} by K.~Bryan and T.~Leise.
+Part~I is Homework~1: we describe the PageRank algorithm, we explain why it works and when it does not, we present our own implementation (a hand-written sparse matrix and the power method), we test it on the two small webs of the paper and on the Hollins dataset (6012 pages), and we solve Exercises~11 and~17.
+Part~II is Homework~3: we solve ten more exercises of the paper (1, 2, 3, 5, 6, 7, 8, 9, 12 and 13).
+All numbers in this report are produced by the code in our repository.
+\end{abstract}
+
+\tableofcontents
+
+\clearpage
+\part{Homework 1: The PageRank Project}
+\input{sec/hw1_intro}
+\input{sec/hw1_algorithm}
+\input{sec/hw1_implementation}
+\input{sec/ex11}
+\input{sec/ex17}
+
+\clearpage
+\part{Homework 3: Ten Exercises from the Paper}
+\input{sec/hw3_intro}
+\input{sec/ex01}
+\input{sec/ex02}
+\input{sec/ex03}
+\input{sec/ex05}
+\input{sec/ex06}
+\input{sec/ex07}
+\input{sec/ex08}
+\input{sec/ex09}
+\input{sec/ex12}
+\input{sec/ex13}
+
+\clearpage
+\begin{thebibliography}{9}
+\bibitem{bryanleise} K.~Bryan and T.~Leise,
+  \emph{The \$25,000,000,000 Eigenvector: The Linear Algebra Behind Google},
+  SIAM Review, 48 (2006), pp.~569--581.
+\bibitem{repo} Ö.~Özkan and Z.~S.~Ulaş, \emph{pagerank\_project} (source code),
+  \url{https://github.com/omerzkan/pagerank_project}.
+\end{thebibliography}
+
+\end{document}

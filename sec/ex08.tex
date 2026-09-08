@@ -1,0 +1,40 @@
+\exheading{8}{The Product of Two Column-Stochastic Matrices}{Ömer Özkan}
+
+\exblock{Problem Statement}
+
+We are asked to show that the product of two column-stochastic matrices is also column-stochastic.
+
+\exblock{Definitions}
+
+Let $\mathbf{B}$ and $\mathbf{C}$ be $n \times n$ column-stochastic matrices:
+\[
+  b_{ik} \ge 0,\quad c_{kj} \ge 0, \qquad \sum_{i=1}^n b_{ik} = 1,\quad \sum_{k=1}^n c_{kj} = 1 \qquad \text{for all } i,j,k .
+\]
+The entries of the product are $(\mathbf{BC})_{ij} = \sum_{k=1}^n b_{ik}c_{kj}$.
+
+\exblock{Proof}
+
+\textbf{Non-negative entries.} Each term $b_{ik}c_{kj}$ is a product of two non-negative numbers, so $(\mathbf{BC})_{ij} \ge 0$.
+
+\textbf{Column sums.} Fix a column $j$ and sum over $i$. We exchange the order of the two sums:
+\[
+  \sum_{i=1}^n (\mathbf{BC})_{ij}
+  = \sum_{i=1}^n \sum_{k=1}^n b_{ik}c_{kj}
+  = \sum_{k=1}^n c_{kj} \left( \sum_{i=1}^n b_{ik} \right)
+  = \sum_{k=1}^n c_{kj} \cdot 1
+  = 1 .
+\]
+In the third step we used that every column $k$ of $\mathbf{B}$ sums to one, and in the last step that column $j$ of $\mathbf{C}$ sums to one.
+
+Another way to see it: with $\ve = (1,\dots,1)^T$, a matrix $\mathbf{B}$ is column-stochastic exactly when $\mathbf{B}^T\ve = \ve$ and $\mathbf{B} \ge 0$.
+Then $(\mathbf{BC})^T\ve = \mathbf{C}^T\mathbf{B}^T\ve = \mathbf{C}^T\ve = \ve$.
+
+\exblock{Why This Matters}
+
+By induction, every power $\A^k$ of a column-stochastic matrix is column-stochastic, and so is $\M^k$.
+This is used in the last part of Exercise~10 of the paper, where the matrix $\mathbf{B} = \frac{1}{n}(\mathbf{I} + \A + \dots + \A^{n-1})$ must be column-stochastic.
+It also means that in the power method the vector $\vx_k = \M^k\vx_0$ keeps the sum $\sum_i (\vx_k)_i = 1$ at every step, so no rescaling is needed in exact arithmetic.
+
+\exblock{Conclusion}
+
+If $\mathbf{B}$ and $\mathbf{C}$ are column-stochastic, then $\mathbf{BC}$ has non-negative entries and columns that sum to one: $\mathbf{BC}$ is column-stochastic.

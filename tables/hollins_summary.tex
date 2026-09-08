@@ -1,0 +1,19 @@
+\begin{table}[H]\centering
+\begin{tabular}{lr}
+\toprule
+\textbf{Quantity} & \textbf{Value} \\
+\midrule
+pages $n$ & 6012 \\
+links (non-zeros of $\A$) & 23\,875 \\
+fill of $\A$ & 0.066\% \\
+dangling pages & 3189 (53\%) \\
+memory, CSR arrays & 0.43 MB \\
+memory, dense matrix & 289 MB \\
+iterations ($m=0.15$, $\texttt{tol}=10^{-12}$) & 138 \\
+final residual $\|\M\vx_k-\vx_k\|_1$ & $9.7\cdot10^{-13}$ \\
+time (build CSR + iterations) & 1.0 s \\
+\bottomrule
+\end{tabular}
+\caption{PageRank on the Hollins dataset}
+\label{tab:hollins}
+\end{table}

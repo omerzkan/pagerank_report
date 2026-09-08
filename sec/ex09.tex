@@ -1,0 +1,52 @@
+\exheading{9}{A Page with No Backlinks Gets the Score $m/n$}{Ömer Özkan}
+
+\exblock{Problem Statement}
+
+We are asked to show that, with formula (3.2), a page with no backlinks gets the importance score $m/n$.
+This is the version with damping of Exercise~5, where the same page got the score $0$.
+
+\exblock{Definitions}
+
+Formula (3.2) is
+\[
+  \vx = (1-m)\A\vx + m\vs ,
+\]
+where $\vs$ is the vector with all entries $1/n$ and $\vx$ is scaled so that $\sum_i x_i = 1$.
+Page $i$ has no backlinks when no page links to it, that is, when row $i$ of $\A$ is zero.
+
+\exblock{Proof}
+
+Take row $i$ of formula (3.2):
+\[
+  x_i = (1-m)\sum_{j=1}^n A_{ij}x_j + \frac{m}{n} .
+\]
+If page $i$ has no backlinks, then $A_{ij} = 0$ for every $j$, so the sum is zero and
+\[
+  x_i = \frac{m}{n} .
+\]
+The result does not depend on the rest of the web, only on $m$ and $n$.
+Also, since $\A\vx \ge 0$, every page gets at least $m/n$: this is the smallest possible score with the matrix $\M$.
+
+\exblock{Check with Our Computations}
+
+\begin{itemize}
+  \item In Exercise~12, page~6 has no backlinks, $n = 6$, $m = 0.15$, and we compute $x_6 = 0.025000 = 0.15/6$.
+  \item In Exercise~13, page~5 has no backlinks, $n = 5$, and we compute $x_5 = 0.030000 = 0.15/5$.
+  \item In Example~2 of the paper (Figure~2.2), page~5 has no backlinks and the paper gives $x_5 = 0.03 = 0.15/5$.
+  \item On Hollins every score is at least $m/n = 2.5\cdot10^{-5}$ (Section~\ref{sec:hollins}).
+\end{itemize}
+
+\exblock{A Remark on the Paper}
+
+In Section~3.1 the paper writes ``a web page with no backlinks (a dangling node)''.
+These are two different things: a page with no backlinks has a zero \emph{row} in $\A$ (nobody links to it), while a dangling node has a zero \emph{column} (it links to nobody).
+Exercise~9 is about the zero row.
+For example page~5 of Figure~2.2 has no backlinks but is not dangling, since it links to pages 3 and 4.
+
+\exblock{Conclusion}
+
+With formula (3.2) a page with no backlinks has importance score exactly
+\[
+  x_i = \frac{m}{n} ,
+\]
+instead of $0$ as with formula (2.1). The damping term gives every page a small base score.
